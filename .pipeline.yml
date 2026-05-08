@@ -6,6 +6,8 @@ runtime:
 environments:
   dev:
     role-arn: arn:aws:iam::123456789012:role/dev-lambda-role
+    test:
+      bob: nome
   prod:
     role-arn: arn:aws:iam::123456789012:role/prod-lambda-role
   files-to-replace:
