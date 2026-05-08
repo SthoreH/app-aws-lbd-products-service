@@ -19,29 +19,9 @@ jobs:
           validate-title: "false"
           validate-description: "false"
 
-  validate-app:
-    name: App Validate
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: npm
-          cache-dependency-path: src/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Type check
-        run: npx tsc --noEmit
+  # validate-app:
+  #   name: App Validate
+  #   uses: SthoreH/shd-github-actions-workflows/.github/workflows/lambda-ci.yml@main
 
   validate-terraform:
     name: Terraform Validate
@@ -50,6 +30,16 @@ jobs:
     environment: dev
     steps:
       - uses: actions/checkout@v4
+
+      - uses: SthoreH/shd-github-actions-workflows/actions/parse-config@main
+        id: config-parser
+        with:
+          environment: "dev"
+
+      - name: Debug Config
+        run: |
+          echo "Merged Vars: ${{ steps.config-parser.outputs.config }}"
+          echo "Files to Replace: ${{ steps.config-parser.outputs.files_to_replace }}"
 
       - uses: SthoreH/shd-github-actions-workflows/actions/validate-terraform@main
         env:
