@@ -41,11 +41,18 @@ jobs:
           echo "Merged Vars: ${{ steps.config-parser.outputs.config }}"
           echo "Files to Replace: ${{ steps.config-parser.outputs.files_to_replace }}"
 
+      - uses: SthoreH/shd-github-actions-workflows/actions/replace-tokens@main
+        id: tokens-replacer
+        with:
+          files: ${{ steps.config-parser.outputs.files_to_replace }}
+          vars: ${{ steps.config-parser.outputs.config }}
+
       - uses: SthoreH/shd-github-actions-workflows/actions/validate-terraform@main
         env:
           TF_VAR_github_token: ${{ secrets.AMPLIFY_GITHUB_TOKEN }}
         with:
           environment: dev
+          terraform-version: ${{ fromJSON(steps.config-parser.outputs.config).pipe_python_version }}
           tf-backend-bucket: ${{ vars.TF_STATE_BUCKET }}
           tf-backend-key: ${{ github.event.repository.name }}/terraform.tfstate
           aws-role-arn: ${{ vars.AWS_ROLE_ARN }}
