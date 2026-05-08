@@ -1,0 +1,1 @@
+print("Hello, World! ${pipe_environment_role-arn}")
