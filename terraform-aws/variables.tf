@@ -19,3 +19,9 @@ variable "github_repository" {
   type        = string
   default     = "app-aws-lbd-products-service"
 }
+
+variable "lambda_zip_path" {
+  description = "Absolute path to the Lambda .zip artifact produced by the CD pipeline. Defaults to empty so terraform destroy works without rebuilding the artifact."
+  type        = string
+  default     = ""
+}

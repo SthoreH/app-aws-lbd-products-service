@@ -1,58 +1,26 @@
-name: CI
+name: CI Dev
 
 on:
   pull_request:
     branches: [dev]
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
-  validate-pr:
-    name: Pull Request Validate
+  pr-validate:
+    name: Validate Pull Request
     runs-on: ubuntu-latest
     steps:
-      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@main
+      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@v1.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           validate-title: "false"
           validate-description: "false"
 
-  # validate-app:
-  #   name: App Validate
-  #   uses: SthoreH/shd-github-actions-workflows/.github/workflows/lambda-ci.yml@main
-
-  validate-terraform:
-    name: Terraform Validate
-    if: github.base_ref == 'dev'
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: SthoreH/shd-github-actions-workflows/actions/parse-config@main
-        id: config-parser
-        with:
-          environment: "dev"
-
-      - name: Debug Config
-        run: |
-          echo "Merged Vars: ${{ steps.config-parser.outputs.config }}"
-          echo "Files to Replace: ${{ steps.config-parser.outputs.files_to_replace }}"
-
-      - uses: SthoreH/shd-github-actions-workflows/actions/replace-tokens@main
-        id: tokens-replacer
-        with:
-          files: ${{ steps.config-parser.outputs.files_to_replace }}
-          vars: ${{ steps.config-parser.outputs.config }}
-
-      - uses: SthoreH/shd-github-actions-workflows/actions/validate-terraform@main
-        env:
-          TF_VAR_github_token: ${{ secrets.AMPLIFY_GITHUB_TOKEN }}
-        with:
-          environment: dev
-          terraform-version: ${{ fromJSON(steps.config-parser.outputs.config).pipe_python_version }}
-          tf-backend-bucket: ${{ vars.TF_STATE_BUCKET }}
-          tf-backend-key: ${{ github.event.repository.name }}/terraform.tfstate
-          aws-role-arn: ${{ vars.AWS_ROLE_ARN }}
+  ci:
+    name: Validate Lambda
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.0
+    with:
+      environment: dev
+    secrets: inherit

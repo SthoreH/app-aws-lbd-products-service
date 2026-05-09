@@ -1,61 +1,26 @@
-name: CI
+name: CI Prod
 
 on:
   pull_request:
     branches: [main]
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
-  validate-pr:
-    name: Pull Request Validate
+  pr-validate:
+    name: Validate Pull Request
     runs-on: ubuntu-latest
     steps:
-      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@main
+      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@v1.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           validate-title: "true"
           validate-description: "false"
 
-  validate-app:
-    name: App Validate
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: npm
-          cache-dependency-path: src/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Type check
-        run: npx tsc --noEmit
-
-  validate-terraform:
-    name: Terraform Validate
-    if: github.base_ref == 'main'
-    runs-on: ubuntu-latest
-    environment: prod
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: SthoreH/shd-github-actions-workflows/actions/validate-terraform@main
-        env:
-          TF_VAR_github_token: ${{ secrets.AMPLIFY_GITHUB_TOKEN }}
-        with:
-          environment: prod
-          tf-backend-bucket: ${{ vars.TF_STATE_BUCKET }}
-          tf-backend-key: ${{ github.event.repository.name }}/terraform.tfstate
-          aws-role-arn: ${{ vars.AWS_ROLE_ARN }}
+  ci:
+    name: Validate Lambda
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.0
+    with:
+      environment: prod
+    secrets: inherit
