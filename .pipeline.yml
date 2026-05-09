@@ -1,7 +1,15 @@
-
-runtime:
-  python-version: "3.13"
+infra:
   terraform-version: "1.4.9"
+  working-path: terraform-aws
+
+application:
+  python-version: "3.13"
+  working-path: app/src
+  requirements: requirements.txt
+
+tests:
+  working-path: app/tests
+  requirements: test-requirements.txt
 
 environments:
   dev:
@@ -13,14 +21,6 @@ environments:
   files-to-replace:
     - app/src/config.py
     - app/src/another_config.py
-
-tests:
-  working-path: app/tests
-  requirements: test-requirements.txt
-
-deploy:
-  working-path: app/src
-  requirements: requirements.txt
 
 # TODO: Add more options for the CI workflow, such as:
 # quality:
