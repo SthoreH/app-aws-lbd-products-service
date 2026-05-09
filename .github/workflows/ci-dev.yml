@@ -13,7 +13,7 @@ jobs:
     name: Validate Pull Request
     runs-on: ubuntu-latest
     steps:
-      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@v1.4.1
+      - uses: SthoreH/shd-github-actions-workflows/actions/validate-pr@v1.4.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           validate-title: "false"
@@ -21,7 +21,7 @@ jobs:
 
   ci:
     name: Validate Lambda
-    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.1
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.2
     with:
       environment: dev
     secrets: inherit
