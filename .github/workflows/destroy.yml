@@ -37,7 +37,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: SthoreH/shd-github-actions-workflows/actions/parse-config@v1.4.0
+      - uses: SthoreH/shd-github-actions-workflows/actions/parse-config@v1.4.1
         id: config-parser
         with:
           environment: dev
@@ -48,7 +48,7 @@ jobs:
           echo "TF_PATH=${{ fromJSON(steps.config-parser.outputs.config)['pipe_infra_working-path'] }}" >> $GITHUB_ENV
 
       - name: Destroy Terraform
-        uses: SthoreH/shd-github-actions-workflows/actions/destroy-terraform@v1.4.0
+        uses: SthoreH/shd-github-actions-workflows/actions/destroy-terraform@v1.4.1
         with:
           environment: dev
           working-directory: ${{ env.TF_PATH }}
