@@ -21,7 +21,7 @@ jobs:
 
   ci:
     name: Validate Lambda
-    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.1
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/ci-lambda-python.yml@v1.4.3
     with:
       environment: prod
     secrets: inherit

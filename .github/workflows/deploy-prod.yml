@@ -13,7 +13,7 @@ permissions:
 jobs:
   cd:
     name: Deploy Lambda
-    uses: SthoreH/shd-github-actions-workflows/.github/workflows/cd-lambda-python.yml@v1.4.1
+    uses: SthoreH/shd-github-actions-workflows/.github/workflows/cd-lambda-python.yml@v1.4.3
     with:
       environment: prod
     secrets: inherit

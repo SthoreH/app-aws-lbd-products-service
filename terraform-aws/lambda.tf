@@ -6,7 +6,7 @@ module "lambda" {
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.13"
   role          = module.lambda_role.role_arn
-  zip_file_path = var.lambda_zip_path
+  zip_file_path = local.lambda_zip_path
 
   log_retention_days = 14
 
