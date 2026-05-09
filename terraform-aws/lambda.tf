@@ -8,6 +8,8 @@ module "lambda" {
   role          = module.lambda_role.role_arn
   zip_file_path = local.lambda_zip_path
 
+  environment_variables = merge(try(local.environment_variables, {}), var.environment_variables)
+
   log_retention_days = 14
 
   tags = local.tags
