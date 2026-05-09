@@ -11,7 +11,7 @@ module "lambda" {
   environment_variables = merge(try(local.environment_variables, {}), var.environment_variables)
 
   publish_function = true
-  alias            = local.lambda_alias
+  alias            = local.function_alias
 
   log_retention_days = 14
 
