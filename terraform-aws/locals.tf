@@ -1,8 +1,8 @@
 locals {
-  app_name   = "products-service"
+  app_name = "products-service"
 
   template_variables = {
-    account_id = data.aws_caller_identity.current.account_id
+    account_id        = data.aws_caller_identity.current.account_id
     orders_table_name = "orders"
   }
 
