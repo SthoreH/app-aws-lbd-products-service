@@ -1,9 +1,11 @@
+runtime:
+  python-version: "3.13"
+
 infra:
   terraform-version: "1.4.9"
   working-path: terraform-aws
 
-application:
-  python-version: "3.13"
+deploy:
   working-path: app/src
   requirements: requirements.txt
 
