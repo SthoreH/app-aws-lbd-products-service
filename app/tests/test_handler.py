@@ -1,6 +1,6 @@
 import json
 
-from handler import lambda_handler
+from lambda_function import lambda_handler
 
 
 def test_should_return_status_200_when_event_is_valid():
