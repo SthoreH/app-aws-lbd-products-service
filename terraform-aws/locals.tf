@@ -1,5 +1,8 @@
 locals {
-  app_name = "products-service"
+  app_name = "lbd-products-service"
+  app_description = "Products service Lambda"
+  handler = "lambda_function.lambda_handler"
+  runtime = "python3.13"
 
   # Convention: the CI/CD pipeline packages the Lambda to <repo-root>/dist/lambda.zip
   # before terraform plan/apply. Keeping the path here avoids passing -var from workflows.
