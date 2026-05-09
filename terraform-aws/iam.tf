@@ -1,5 +1,5 @@
 module "lambda_role" {
-  source = "github.com/SthoreH/shd-terraform-aws-iam?ref=v1.1.1"
+  source = "github.com/SthoreH/shd-terraform-aws-iam?ref=v1.1.2"
 
   role_name                   = "${local.app_name}-lbd-role"
   assume_role_policy_document = templatefile("${path.module}/iam_templates/trust/lambda_assume_role.tftpl", local.template_variables)
