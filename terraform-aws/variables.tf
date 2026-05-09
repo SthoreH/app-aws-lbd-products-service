@@ -8,6 +8,12 @@ variable "environment" {
   }
 }
 
+variable "environment_variables" {
+  description = "Map of environment variables to set for the Lambda function"
+  type        = map(string)
+  default     = {}  
+}
+
 variable "organization" {
   description = "GitHub organization name, used in resource tags and repository URL"
   type        = string
