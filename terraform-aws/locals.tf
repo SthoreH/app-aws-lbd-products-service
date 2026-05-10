@@ -19,6 +19,16 @@ locals {
     orders_table_name = "orders"
   }
 
+  architectures = ["arm64"]
+
+  # Powertools layer ARN is resolved from a public AWS-managed SSM parameter (see data.tf),
+  # so the latest version is picked up automatically without bumping a hardcoded layer version.
+  powertools_layer_arch = local.architectures[0]
+
+  layers = [
+    data.aws_ssm_parameter.powertools_layer_arn.value
+  ]
+
   tags = {
     ManagedBy  = "terraform"
     Repository = "github.com/${var.organization}/${var.github_repository}"
