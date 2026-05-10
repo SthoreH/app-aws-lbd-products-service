@@ -11,7 +11,8 @@ locals {
   lambda_zip_path = "${path.root}/../dist/lambda.zip"
 
   environment_variables = {
-    ENVIRONMENT = var.environment
+    ENVIRONMENT             = var.environment
+    POWERTOOLS_SERVICE_NAME = local.function_name
   }
 
   template_variables = {
